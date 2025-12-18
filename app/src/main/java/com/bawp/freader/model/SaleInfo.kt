@@ -1,11 +1,11 @@
 package com.bawp.freader.model
 
 data class SaleInfo(
-    val buyLink: String,
-    val country: String,
-    val isEbook: Boolean,
-    val listPrice: ListPrice,
-    val offers: List<Offer>,
-    val retailPrice: RetailPriceX,
-    val saleability: String
+    val buyLink: String? = null,
+    val country: String? = null,
+    val isEbook: Boolean? = null,
+    val listPrice: ListPrice? = null,
+    val offers: List<Offer>? = null,
+    val retailPrice: RetailPriceX? = null,
+    val saleability: String? = null
 )

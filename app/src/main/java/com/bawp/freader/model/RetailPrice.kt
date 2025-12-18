@@ -1,6 +1,6 @@
 package com.bawp.freader.model
 
 data class RetailPrice(
-    val amountInMicros: Int,
-    val currencyCode: String
+    val amountInMicros: Long? = null,
+    val currencyCode: String? = null
 )

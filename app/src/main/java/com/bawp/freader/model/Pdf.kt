@@ -1,6 +1,6 @@
 package com.bawp.freader.model
 
 data class Pdf(
-    val acsTokenLink: String,
-    val isAvailable: Boolean
+    val acsTokenLink: String? = null,
+    val isAvailable: Boolean? = null
 )

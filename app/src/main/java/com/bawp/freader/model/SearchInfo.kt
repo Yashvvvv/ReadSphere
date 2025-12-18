@@ -1,5 +1,5 @@
 package com.bawp.freader.model
 
 data class SearchInfo(
-    val textSnippet: String
+    val textSnippet: String? = null
 )

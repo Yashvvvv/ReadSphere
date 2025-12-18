@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "846649578056",
-    "project_id": "jetareader",
-    "storage_bucket": "jetareader.appspot.com"
+    "project_number": "678944135372",
+    "project_id": "jetareader-92de9",
+    "storage_bucket": "jetareader-92de9.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:your_own_id",
+        "mobilesdk_app_id": "1:678944135372:android:1ca7ffbd51569b2aecca69",
         "android_client_info": {
           "package_name": "com.bawp.freader"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "your_own_id.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "your_own_id"
+          "current_key": "AIzaSyA3qXdQhKLwxRtLLxCTPnkcEdMnOrn4v1g"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "your_own_id.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
