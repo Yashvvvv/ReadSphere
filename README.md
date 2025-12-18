@@ -1,448 +1,420 @@
-# BookVerse: Modern Book Discovery & Reading Companion
+# ReadSphere 📚
 
-![BookVerse App Banner](https://via.placeholder.com/800x200?text=BookVerse+App)
+<p align="center">
+  <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android"/>
+  <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin"/>
+  <img src="https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white" alt="Jetpack Compose"/>
+  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" alt="Firebase"/>
+</p>
 
-> **A comprehensive book management app built with modern Android development practices**
+> **A modern Android book tracking and discovery application built with Jetpack Compose**
 
-BookVerse is an elegant Android application that empowers book enthusiasts to discover new books, track their reading progress, manage personal libraries, and analyze reading habits—all within a clean, intuitive interface built with Jetpack Compose.
+ReadSphere is an elegant Android application that empowers book enthusiasts to discover new books via the Google Books API, track their reading progress, manage personal libraries, and analyze reading statistics—all within a clean, intuitive Material Design 3 interface built entirely with Jetpack Compose.
+
+---
 
 ## ✨ Key Features
 
-- **Seamless Authentication**: Simple sign-up/login flow using Firebase Authentication
-- **Personalized Book Discovery**: Search for books using Google Books API with customized recommendations
-- **Intelligent Library Management**: Track books by reading status (to-read, reading, completed)
-- **Reading Analytics**: Visualize reading habits and progress statistics
-- **Cloud Synchronization**: Access your library across multiple devices with Firestore integration
-- **Modern Material UI**: Clean, intuitive interface following Material Design principles
+| Feature | Description |
+|---------|-------------|
+| 🔐 **Authentication** | Secure email/password sign-up and login via Firebase Authentication |
+| 🔍 **Book Discovery** | Search millions of books using the Google Books API |
+| 📖 **Reading Tracker** | Track books by status: To Read, Currently Reading, Finished |
+| 📊 **Reading Stats** | View reading analytics including books read and progress insights |
+| ☁️ **Cloud Sync** | Access your library across devices with Firestore real-time sync |
+| ⭐ **Ratings & Notes** | Rate books and add personal notes for each title |
+| 🎨 **Material Design 3** | Modern UI following the latest Material Design guidelines |
+
+---
 
 ## 🛠️ Tech Stack
 
 ### Frontend & UI
-| Technology | Implementation |
-|------------|----------------|
-| **Jetpack Compose** | Declarative UI toolkit for building the entire interface |
-| **Material Design Components** | Pre-built composables following Material Design guidelines |
-| **Compose Navigation** | Single-activity app with type-safe navigation between screens |
-| **Animations & Transitions** | Smooth transitions between screens for enhanced UX |
-| **Coil** | Image loading library optimized for Compose with caching |
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **Jetpack Compose** | 1.6.7 | Declarative UI toolkit |
+| **Material 3** | 1.2.1 | Modern Material Design components |
+| **Compose Navigation** | Latest | Type-safe screen navigation |
+| **Coil** | 2.7.0 | Image loading with Compose support |
+| **Material Icons Extended** | 1.6.7 | Comprehensive icon library |
 
 ### Backend & Data
-| Technology | Implementation |
-|------------|----------------|
-| **Firebase Authentication** | Email/password auth with security rules |
-| **Cloud Firestore** | NoSQL document database for user data and book collections |
-| **Google Books API** | RESTful API for book search and metadata |
-| **Retrofit/OkHttp** | Type-safe HTTP client for API communication |
-| **Gson** | JSON parsing and serialization |
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **Firebase BOM** | 33.7.0 | Firebase services platform |
+| **Firebase Auth** | Latest | User authentication |
+| **Cloud Firestore** | Latest | NoSQL cloud database |
+| **Retrofit** | 2.11.0 | REST API client |
+| **OkHttp** | 5.0.0-alpha.11 | HTTP client |
+| **Gson Converter** | 2.11.0 | JSON serialization |
 
-### Architecture & Patterns
-| Component | Implementation |
-|-----------|----------------|
-| **MVVM Architecture** | Clear separation between UI, business logic, and data |
-| **Repository Pattern** | Abstraction layer between data sources and ViewModels |
-| **Use Cases** | Business logic encapsulation for complex operations |
-| **StateFlow & Flow** | Reactive streams for UI state management and data operations |
-| **Kotlin Coroutines** | Asynchronous programming for background tasks |
-| **Dagger Hilt** | Dependency injection throughout the application |
+### Architecture & DI
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **Dagger Hilt** | 2.52 | Dependency injection |
+| **Hilt Navigation Compose** | 1.2.0 | ViewModel injection in Compose |
+| **Kotlin Coroutines** | 1.8.1 | Asynchronous programming |
+| **Lifecycle ViewModel** | 2.9.1 | MVVM architecture support |
 
-## 🏗️ Project Architecture
+---
 
-BookVerse follows Clean Architecture principles with MVVM pattern to ensure:
-- **Testability**: Each layer can be tested independently
-- **Separation of Concerns**: UI, business logic, and data sources are decoupled
-- **Maintainability**: Changes in one layer don't affect others
-- **Scalability**: Easy to add new features
+## 🏗️ Architecture
 
-### Architecture Layers
+ReadSphere follows **MVVM (Model-View-ViewModel)** architecture with a clean separation of concerns:
 
 ```
- ┌──────────────────────┐
- │                      │
- │   PRESENTATION       │──┐
- │   - Composables      │  │
- │   - ViewModels       │  │
- │                      │  │
- └──────────────────────┘  │
-          │                │ UI Events &
- ┌────────▼───────────┐    │ State Updates
- │                    │    │
- │   DOMAIN           │    │
- │   - Use Cases      │◄───┘
- │   - Models         │
- │                    │
- └────────┬───────────┘
-          │ Data Requests &
- ┌────────▼───────────┐ Responses
- │                    │
- │   DATA             │
- │   - Repositories   │
- │   - Data Sources   │
- │                    │
- └────────┬───────────┘
-          │
- ┌────────▼───────────┐
- │                    │
- │   EXTERNAL         │
- │   - Firebase       │
- │   - Google Books   │
- │                    │
- └──────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                      PRESENTATION LAYER                      │
+│  ┌─────────────────┐    ┌─────────────────────────────────┐ │
+│  │   Composables   │◄───│         ViewModels              │ │
+│  │  (UI Screens)   │    │  • HomeScreenViewModel          │ │
+│  │                 │    │  • LoginScreenViewModel         │ │
+│  │  • Home         │    │  • BooksSearchViewModel         │ │
+│  │  • Search       │    │  • DetailsViewModel             │ │
+│  │  • Details      │    └─────────────────────────────────┘ │
+│  │  • Stats        │                    │                   │
+│  │  • Update       │                    │                   │
+│  └─────────────────┘                    │                   │
+└─────────────────────────────────────────┼───────────────────┘
+                                          │
+┌─────────────────────────────────────────┼───────────────────┐
+│                       DATA LAYER        │                   │
+│  ┌─────────────────────────────────────┐│                   │
+│  │           Repositories              ││                   │
+│  │  • BookRepository (Google Books)    │◄                   │
+│  │  • FireRepository (Firestore)       │                    │
+│  └─────────────────┬───────────────────┘                    │
+│                    │                                         │
+│  ┌─────────────────▼───────────────────┐                    │
+│  │         Data Sources                │                    │
+│  │  • BooksApi (Retrofit)              │                    │
+│  │  • Firebase Firestore               │                    │
+│  └─────────────────────────────────────┘                    │
+└─────────────────────────────────────────────────────────────┘
 ```
+
+### Key Architectural Patterns
+
+- **Repository Pattern**: Abstracts data sources from ViewModels
+- **Dependency Injection**: Hilt manages all dependencies
+- **Unidirectional Data Flow**: UI State flows down, events flow up
+- **Reactive Streams**: StateFlow and Compose state for reactive UI
+
+---
 
 ## 📂 Project Structure
 
-The codebase is organized by feature and layer for better maintainability:
-
 ```
 app/src/main/java/com/bawp/freader/
-├── components/          # Reusable UI components
-├── data/                # Data handling
-│   ├── DataOrException.kt   # Error/loading wrapper
-│   └── Resource.kt          # API response wrapper
-├── di/                  # Dependency injection
-│   └── AppModule.kt         # Dagger Hilt modules
-├── model/               # Domain models
-│   ├── Book.kt              # Google Books API models
-│   ├── MBook.kt             # App-specific book model
-│   └── MUser.kt             # User model
-├── navigation/          # Navigation components
-│   ├── ReaderNavigation.kt  # Navigation graph
-│   └── ReaderScreens.kt     # Screen definitions
-├── network/             # API services
-│   └── BooksApi.kt          # Google Books API interface
-├── repository/          # Data repositories
-│   ├── BookRepository.kt    # Books from API
-│   └── FireRepository.kt    # Firebase operations
-├── screens/             # Application screens
-│   ├── details/             # Book details screen
-│   ├── home/                # Home screen
-│   ├── login/               # Auth screens
-│   ├── search/              # Book search
-│   ├── stats/               # Reading statistics
-│   └── update/              # Book status updates
-├── ui/                  # Theme and styling
-└── utils/               # Helper functions
+├── 📁 components/
+│   └── Components.kt           # Reusable UI components (ReaderLogo, InputFields, Cards, etc.)
+│
+├── 📁 data/
+│   ├── DataOrException.kt      # Generic wrapper for data/loading/error states
+│   └── Resource.kt             # Sealed class for API response handling
+│
+├── 📁 di/
+│   └── AppModule.kt            # Hilt dependency injection module
+│
+├── 📁 model/
+│   ├── MBook.kt                # App book model (Firestore document)
+│   ├── MUser.kt                # User profile model
+│   ├── Book.kt                 # Google Books API response model
+│   ├── Item.kt                 # Single book item from API
+│   ├── VolumeInfo.kt           # Book metadata (title, authors, description)
+│   ├── ImageLinks.kt           # Book cover image URLs
+│   └── ...                     # Additional API response models
+│
+├── 📁 navigation/
+│   ├── ReaderNavigation.kt     # NavHost and navigation graph
+│   └── ReaderScreens.kt        # Screen route definitions (enum)
+│
+├── 📁 network/
+│   └── BooksApi.kt             # Retrofit interface for Google Books API
+│
+├── 📁 repository/
+│   ├── BookRepository.kt       # Google Books API operations
+│   └── FireRepository.kt       # Firestore database operations
+│
+├── 📁 screens/
+│   ├── 📁 details/
+│   │   ├── ReaderBookDetailsScreen.kt
+│   │   └── DetailsViewModel.kt
+│   ├── 📁 home/
+│   │   ├── ReaderHomeScreen.kt
+│   │   └── HomeScreenViewModel.kt
+│   ├── 📁 login/
+│   │   ├── ReaderLoginScreen.kt
+│   │   ├── LoginScreenViewModel.kt
+│   │   └── LoadingState.kt
+│   ├── 📁 search/
+│   │   ├── ReaderBookSearchScreen.kt
+│   │   └── BooksSearchViewModel.kt
+│   ├── 📁 stats/
+│   │   └── ReaderStatsScreen.kt
+│   ├── 📁 update/
+│   │   └── ReaderBookUpdateScreen.kt
+│   └── ReaderSplashScreen.kt
+│
+├── 📁 ui/
+│   └── theme/                  # Material 3 theming
+│
+├── 📁 utils/
+│   ├── Constants.kt            # API base URL and constants
+│   └── Utils.kt                # Helper functions (date formatting, etc.)
+│
+├── MainActivity.kt             # Single activity entry point
+└── ReaderApplication.kt        # Hilt application class
 ```
 
-## 🔄 Data Flow
+---
 
-BookVerse implements a unidirectional data flow pattern with the following lifecycle:
+## 📱 Screen Flow
 
-1. **UI Events**: User interactions trigger events
-2. **ViewModel Processing**: Events are processed by ViewModels
-3. **Repository Operations**: Data is fetched/modified through repositories
-4. **State Updates**: UI state is updated with new data
-5. **UI Rendering**: Composables re-render based on state changes
+```
+                           ┌──────────────────┐
+                           │   SplashScreen   │
+                           │   (Animation)    │
+                           └────────┬─────────┘
+                                    │
+                    ┌───────────────┴───────────────┐
+                    │                               │
+              Not Logged In                   Already Logged In
+                    │                               │
+                    ▼                               ▼
+           ┌────────────────┐              ┌────────────────┐
+           │  LoginScreen   │              │   HomeScreen   │◄──────────┐
+           │                │              │                │           │
+           │ • Email/Pass   │              │ • Reading Now  │           │
+           │ • Sign Up      │──────────────►│ • Reading List │           │
+           └────────────────┘              └───────┬────────┘           │
+                                                   │                    │
+                    ┌──────────────────────────────┼────────────────────┤
+                    │                              │                    │
+                    ▼                              ▼                    │
+           ┌────────────────┐              ┌────────────────┐           │
+           │  SearchScreen  │              │  StatsScreen   │           │
+           │                │              │                │           │
+           │ • Search Books │              │ • Total Books  │           │
+           │ • View Results │              │ • Completed    │───────────┘
+           └───────┬────────┘              └────────────────┘
+                   │
+                   ▼
+           ┌────────────────┐              ┌────────────────┐
+           │ DetailsScreen  │              │  UpdateScreen  │
+           │                │              │                │
+           │ • Book Info    │              │ • Add Notes    │
+           │ • Save to List │              │ • Rate Book    │
+           └────────────────┘              │ • Update Status│
+                                           └────────────────┘
+```
 
-### Example Flow: Book Search
+---
+
+## 🔄 Data Flow Example: Book Search
 
 ```mermaid
 sequenceDiagram
     participant User
     participant SearchScreen
-    participant SearchViewModel
+    participant BooksSearchViewModel
     participant BookRepository
     participant BooksApi
+    participant GoogleBooksAPI
 
     User->>SearchScreen: Enter search query
-    SearchScreen->>SearchViewModel: search(query)
-    SearchViewModel->>BookRepository: getBooks(query)
-    BookRepository->>BooksApi: fetchBooks(query)
-    BooksApi-->>BookRepository: Return book data
-    BookRepository-->>SearchViewModel: Return wrapped results
-    SearchViewModel-->>SearchScreen: Update UI state
-    SearchScreen-->>User: Display search results
+    SearchScreen->>BooksSearchViewModel: searchBooks(query)
+    BooksSearchViewModel->>BookRepository: getBooks(query)
+    BookRepository->>BooksApi: getAllBooks(query)
+    BooksApi->>GoogleBooksAPI: GET /volumes?q={query}
+    GoogleBooksAPI-->>BooksApi: JSON Response
+    BooksApi-->>BookRepository: Book List
+    BookRepository-->>BooksSearchViewModel: Resource<List<Item>>
+    BooksSearchViewModel-->>SearchScreen: Update UI State
+    SearchScreen-->>User: Display Results
 ```
-
-## 📊 Class Diagram
-
-```
-┌───────────────────────┐      ┌─────────────────────┐      ┌───────────────────┐
-│       HomeScreen      │◄─────│  HomeScreenViewModel │◄─────│  FireRepository   │
-├───────────────────────┤      ├─────────────────────┤      ├───────────────────┤
-│ - BookList            │      │ - userBooks: Flow   │      │ - firestore       │
-│ - ReadingSection      │      ├─────────────────────┤      ├───────────────────┤
-└───────────────────────┘      │ + getBooks()        │      │ + getUserBooks()  │
-                               │ + updateBook()      │      │ + addBook()       │
-                               └─────────┬───────────┘      └────────┬──────────┘
-                                         │                          │
-                                         ▼                          ▼
-                               ┌─────────────────────┐     ┌────────────────────┐
-                               │    BookRepository   │     │     Firestore      │
-                               ├─────────────────────┤     │     (Firebase)     │
-                               │ - booksApi          │     └────────────────────┘
-                               ├─────────────────────┤
-                               │ + getBooks()        │
-                               │ + getBookInfo()     │
-                               └─────────┬───────────┘
-                                         │
-                                         ▼
-                               ┌─────────────────────┐
-                               │      BooksApi       │
-                               ├─────────────────────┤
-                               │ + getAllBooks()     │
-                               │ + getBookInfo()     │
-                               └─────────────────────┘
-```
-
-## 🌐 Firebase Integration
-
-BookVerse uses Firebase services for:
-
-### Authentication
-- Email/password authentication
-- Auth state persistence
-- Security rules for data access
-
-### Cloud Firestore
-The app uses the following Firestore collections:
-- **users**: User profiles and preferences
-- **books**: User's personal book collection with:
-  - Reading status (to-read, reading, completed)
-  - Start/finish dates
-  - Personal notes and ratings
-  - Reading statistics
-
-### Security Rules
-Custom Firestore security rules ensure users can only:
-- Access their own data
-- Create and modify their own book entries
-- Read public book information
-
-## 📱 Screen Navigation Flow
-
-```
-                          ┌───────────────┐
-                          │  SplashScreen │
-                          └───────┬───────┘
-                                  │
-                  ┌───────────────▼────────────────┐
-                  │                                 │
-           ┌──────▼─────┐             ┌─────────────▼─────┐
-           │ LoginScreen │─── New ───►│CreateAccountScreen│
-           └──────┬─────┘   User      └───────────────────┘
-                  │
-           Authenticated
-                  │
-           ┌──────▼─────┐
-           │ReaderHomeScreen│◄────────────────┐
-           └───┬────┬───┬┘                    │
-               │    │   │                     │
-     ┌─────────▼─┐  │   │    ┌───────────────┐│
-     │SearchScreen│  │   └───►│ReaderStatsScreen│
-     └──────┬────┘  │        └────────────┬────┘
-            │       │                     │
-     ┌──────▼────┐  │        ┌────────────▼────┐
-     │DetailScreen│  └──────►│   UpdateScreen  │
-     └───────────┘           └─────────────────┘
-```
-
-## 💡 Key Implementation Highlights
-
-### Smart State Management
-BookVerse uses a custom `Resource<T>` and `DataOrException<T, Boolean, Exception>` wrapper classes to handle loading states, errors, and data throughout the application, keeping the UI consistent and error-resistant.
-
-```kotlin
-sealed class Resource<T> {
-    class Success<T>(val data: T): Resource<T>()
-    class Error<T>(val message: String, val data: T? = null): Resource<T>()
-    class Loading<T>(val data: T? = null): Resource<T>()
-}
-```
-
-### Optimized Book Search
-The app implements pagination and caching strategies to optimize book search performance and reduce API calls to the Google Books API.
-
-### Offline Support
-BookVerse provides offline capabilities by caching book data and user library information, allowing users to browse their collection without internet connectivity.
-
-## 🚀 Future Enhancements
-
-- **Reading Timer**: Track actual reading time per session
-- **Social Features**: Connect with friends and share recommendations
-- **Reading Goals**: Set and track annual reading challenges
-- **Dark/Light Theme**: Support for system and custom themes
-- **Book Clubs**: Create and join virtual reading groups
-- **Reading Reminders**: Scheduled notifications to build reading habits
-- **Barcode Scanner**: Add physical books by scanning ISBN
-- **Export/Import**: Library data backup and restoration
-
-## ⚙️ Setup & Installation
-
-1. Clone the repository
-   ```bash
-   git clone https://github.com/yourusername/bookverse.git
-   ```
-
-2. Create a Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
-   - Enable Authentication (Email/Password)
-   - Create a Firestore database
-   - Download `google-services.json` and place it in the app directory
-
-3. Get a Google Books API key at [Google Cloud Console](https://console.cloud.google.com)
-   - Add it to your `local.properties` file:
-   ```
-   google.books.api.key=YOUR_API_KEY_HERE
-   ```
-
-4. Open the project in Android Studio and build
-
-## 🧪 Testing Strategy
-
-The project includes:
-- **Unit Tests**: ViewModel and Repository logic
-- **Integration Tests**: Repository interactions with Firebase
-- **UI Tests**: Compose UI testing with semantics
-- **End-to-End Tests**: Complete user flows
-
-## 📜 License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-**BookVerse** - Built with ❤️ using Jetpack Compose
+## 🔥 Firebase Integration
 
-## 📁 Complete Project Structure
+### Authentication
+ReadSphere uses Firebase Authentication for secure user management:
 
-Below is the detailed structure of the BookVerse project:
+```kotlin
+// Sign in flow
+viewModel.signInWithEmailAndPassword(email, password) {
+    navController.navigate(ReaderScreens.ReaderHomeScreen.name)
+}
 
-```
-BookVerse/
-├── app/                            # Main application module
-│   ├── build.gradle                # App-level build configuration
-│   ├── google-services.json        # Firebase configuration file
-│   └── src/
-│       ├── main/
-│       │   ├── AndroidManifest.xml # App manifest with internet permissions
-│       │   ├── java/com/bawp/freader/
-│       │   │   ├── MainActivity.kt  # Entry point of the application
-│       │   │   ├── ReaderApplication.kt  # Application class for Hilt
-│       │   │   ├── components/     # Reusable UI components
-│       │   │   │   └── Components.kt
-│       │   │   ├── data/           # Data handling utilities
-│       │   │   │   ├── DataOrException.kt  # Error/loading wrapper
-│       │   │   │   └── Resource.kt  # API response wrapper
-│       │   │   ├── di/             # Dependency injection
-│       │   │   │   └── AppModule.kt  # Hilt module definitions
-│       │   │   ├── model/          # Domain models
-│       │   │   │   ├── AccessInfo.kt
-│       │   │   │   ├── Book.kt
-│       │   │   │   ├── Epub.kt
-│       │   │   │   ├── ImageLinks.kt
-│       │   │   │   ├── IndustryIdentifier.kt
-│       │   │   │   ├── Item.kt
-│       │   │   │   ├── ListPrice.kt
-│       │   │   │   ├── ListPriceX.kt
-│       │   │   │   ├── MBook.kt  # Custom book model
-│       │   │   │   ├── MUser.kt  # User model
-│       │   │   │   ├── Offer.kt
-│       │   │   │   ├── PanelizationSummary.kt
-│       │   │   │   ├── Pdf.kt
-│       │   │   │   ├── ReadingModes.kt
-│       │   │   │   ├── RetailPrice.kt
-│       │   │   │   ├── RetailPriceX.kt
-│       │   │   │   ├── SaleInfo.kt
-│       │   │   │   ├── SearchInfo.kt
-│       │   │   │   └── VolumeInfo.kt
-│       │   │   ├── navigation/     # Navigation components
-│       │   │   │   ├── ReaderNavigation.kt  # Navigation graph
-│       │   │   │   └── ReaderScreens.kt  # Screen definitions
-│       │   │   ├── network/        # Network services
-│       │   │   │   └── BooksApi.kt  # Google Books API interface
-│       │   │   ├── repository/     # Data repositories
-│       │   │   │   ├── BookRepository.kt  # Books API repository
-│       │   │   │   └── FireRepository.kt  # Firebase operations
-│       │   │   ├── screens/        # UI screens
-│       │   │   │   ├── details/    # Book details
-│       │   │   │   ├── home/       # Home screen
-│       │   │   │   ├── login/      # Authentication
-│       │   │   │   ├── search/     # Book search
-│       │   │   │   ├── stats/      # Reading statistics
-│       │   │   │   ├── update/     # Book status updates
-│       │   │   │   └── ReaderSplashScreen.kt  # App splash screen
-│       │   │   ├── ui/             # Theme and styling
-│       │   │   └── utils/          # Helper utilities
-│       │   └── res/                # Resources
-│       │       ├── drawable/       # Vector drawables and icons
-│       │       ├── mipmap-*/       # App icons
-│       │       ├── values/         # String, color, and theme resources
-│       │       └── values-night/   # Night mode resources
-│       ├── androidTest/            # Instrumented tests
-│       └── test/                   # Unit tests
-├── build.gradle                    # Project-level build file
-├── gradle.properties               # Gradle configuration properties
-├── gradle/wrapper/                 # Gradle wrapper
-├── settings.gradle                 # Project settings
-└── local.properties                # Local SDK configuration
-```
-
-## 🔧 Build Configuration
-
-The project uses Gradle with the following key configurations:
-
-### Project-level build.gradle
-```groovy
-buildscript {
-    ext {
-        compose_version = '1.4.0'
-        hilt_version = '2.44'
-        kotlin_version = '1.8.10'
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.10.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.15'
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-    }
+// Create account flow
+viewModel.createUserWithEmailAndPassword(email, password) {
+    navController.navigate(ReaderScreens.ReaderHomeScreen.name)
 }
 ```
 
-### App-level build.gradle
-The app module is configured with:
-- Jetpack Compose UI toolkit
-- Firebase Authentication and Firestore
-- Dagger Hilt for dependency injection
-- Kotlin Coroutines for asynchronous programming
-- Retrofit and OkHttp for API communication
+### Cloud Firestore Schema
+
+**Collection: `books`**
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | String | Document ID |
+| `title` | String | Book title |
+| `authors` | String | Comma-separated authors |
+| `description` | String | Book description |
+| `categories` | String | Book categories |
+| `book_photo_url` | String | Cover image URL |
+| `published_date` | String | Publication date |
+| `page_count` | String | Number of pages |
+| `rating` | Double | User rating (0-5) |
+| `notes` | String | User's personal notes |
+| `started_reading_at` | Timestamp | When reading started |
+| `finished_reading_at` | Timestamp | When reading finished |
+| `user_id` | String | Owner's Firebase UID |
+| `google_book_id` | String | Google Books API ID |
+
+---
+
+## 💡 Key Implementation Details
+
+### State Management with Resource Wrapper
+
+```kotlin
+sealed class Resource<T>(val data: T? = null, val message: String? = null) {
+    class Success<T>(data: T) : Resource<T>(data)
+    class Error<T>(message: String?, data: T? = null) : Resource<T>(data, message)
+    class Loading<T>(data: T? = null) : Resource<T>(data)
+}
+```
+
+### Dependency Injection with Hilt
+
+```kotlin
+@Module
+@InstallIn(SingletonComponent::class)
+object AppModule {
+    @Singleton
+    @Provides
+    fun provideBookApi(): BooksApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(BooksApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFireBookRepository() = FireRepository(
+        queryBook = FirebaseFirestore.getInstance().collection("books")
+    )
+}
+```
+
+### Navigation with Compose
+
+```kotlin
+enum class ReaderScreens {
+    SplashScreen,
+    LoginScreen,
+    CreateAccountScreen,
+    ReaderHomeScreen,
+    SearchScreen,
+    DetailScreen,
+    UpdateScreen,
+    ReaderStatsScreen
+}
+```
+
+---
+
+## ⚙️ Setup & Installation
+
+### Prerequisites
+- Android Studio Hedgehog (2023.1.1) or later
+- JDK 8 or higher
+- Android SDK 35 (minimum SDK 29)
+
+### Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/readsphere.git
+   cd readsphere
+   ```
+
+2. **Firebase Setup**
+   - Create a project at [Firebase Console](https://console.firebase.google.com)
+   - Enable **Email/Password Authentication**
+   - Create a **Cloud Firestore** database
+   - Download `google-services.json` and place it in `/app` directory
+
+3. **Google Books API (Optional)**
+   - Get an API key from [Google Cloud Console](https://console.cloud.google.com)
+   - The app works without a key but has rate limits
+
+4. **Build and Run**
+   ```bash
+   ./gradlew assembleDebug
+   ```
+   Or open in Android Studio and click Run
+
+---
+
+## 📦 Build Configuration
+
+### SDK Versions
+| Configuration | Value |
+|---------------|-------|
+| Compile SDK | 35 |
+| Target SDK | 35 |
+| Min SDK | 29 |
+| Kotlin | 2.0.21 |
+| Gradle Plugin | 8.10.1 |
 
 ### Key Dependencies
-- **AndroidX Core & Lifecycle**: Latest versions for modern Android development
-- **Material Components**: For consistent UI design
-- **Firebase**: Authentication and Firestore for backend services
-- **Retrofit/OkHttp**: For network requests to Google Books API
-- **Coil**: For image loading in Compose
+```groovy
+// Compose BOM
+implementation platform('androidx.compose:compose-bom:2024.02.00')
 
-## 📊 Data Model Insights
+// Firebase
+implementation platform('com.google.firebase:firebase-bom:33.7.0')
+implementation 'com.google.firebase:firebase-auth-ktx'
+implementation 'com.google.firebase:firebase-firestore-ktx'
 
-BookVerse implements a sophisticated data model to handle book information:
+// Hilt
+implementation "com.google.dagger:hilt-android:2.52"
+kapt "com.google.dagger:hilt-android-compiler:2.52"
 
-### Google Books API Models
-The app uses detailed models to parse Google Books API responses, including:
-- `Item`: The main container for book data
-- `VolumeInfo`: Contains book details like title, authors, description
-- `ImageLinks`: URLs for book cover images at different resolutions
-- `IndustryIdentifier`: ISBN and other book identifiers
+// Networking
+implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
 
-### App-Specific Models
-- `MBook`: An enhanced book model that combines API data with user-specific information
-- `MUser`: User profile data including reading preferences and statistics
+// Image Loading
+implementation 'io.coil-kt:coil-compose:2.7.0'
+```
 
-## 🔐 Security Considerations
+---
 
-BookVerse implements several security measures:
-- Secure Firebase Authentication for user management
-- Data validation before Firestore operations
-- Proper exception handling for API calls and database operations
-- Internet permission declaration in the AndroidManifest.xml
+## 🚀 Future Roadmap
 
-## 🌟 Unique Features in Detail
+- [ ] **Dark Theme Support** - System-aware theming
+- [ ] **Offline Mode** - Local caching with Room database
+- [ ] **Reading Timer** - Track reading sessions
+- [ ] **Barcode Scanner** - Add books by ISBN scan
+- [ ] **Reading Goals** - Set and track yearly goals
+- [ ] **Social Features** - Share and recommend books
+- [ ] **Export/Import** - Backup library data
+- [ ] **Widgets** - Home screen reading widgets
 
-### Smart Book Recommendations
-The app analyzes reading history and preferences to suggest new books that match the user's interests, using a custom algorithm based on genre, authors, and reading speed.
+---
 
-### Reading Insights
-Beyond basic statistics, BookVerse provides insightful analytics about reading habits, including preferred genres, reading time patterns, and completion rates, helping users better understand their reading behavior.
+## 📄 License
 
-### Customizable Reading Experience
-Users can personalize their experience with custom shelves, reading goals, and notification preferences tailored to their unique reading style.
+This project is licensed under the **Apache License 2.0** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<p align="center">
+  <b>ReadSphere</b> — Built with ❤️ using Jetpack Compose
+</p>
