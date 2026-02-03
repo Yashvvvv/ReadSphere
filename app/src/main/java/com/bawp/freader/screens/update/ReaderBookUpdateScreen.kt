@@ -57,9 +57,7 @@ fun BookUpdateScreen(navController: NavHostController, bookItemId: String, viewM
             navController.popBackStack()
         }
     }) { padding ->
-        val bookInfo = produceState(initialValue = DataOrException<List<MBook>, Boolean, Exception>(emptyList(), true, Exception(""))) {
-            value = viewModel.data.value
-        }.value
+        val bookInfo = viewModel.data.value
 
         Surface(modifier = Modifier.fillMaxSize().padding(padding)) {
             Column(modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {

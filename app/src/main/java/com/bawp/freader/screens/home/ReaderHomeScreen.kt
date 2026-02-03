@@ -109,10 +109,12 @@ fun HomeContent(navController: NavController, viewModel: HomeScreenViewModel) {
         }
 
         ReadingRightNowArea(listOfBooks = listOfBooks,
-            navController =navController )
+            navController = navController,
+            viewModel = viewModel)
         TitleSection(label = "Reading List")
         BookListArea(listOfBooks = listOfBooks,
-            navController = navController)
+            navController = navController,
+            viewModel = viewModel)
 
 
 
@@ -122,14 +124,15 @@ fun HomeContent(navController: NavController, viewModel: HomeScreenViewModel) {
 
 @Composable
 fun BookListArea(listOfBooks: List<MBook>,
-                 navController: NavController) {
+                 navController: NavController,
+                 viewModel: HomeScreenViewModel) {
     val addedBooks = listOfBooks.filter { mBook ->
         mBook.startedReading == null && mBook.finishedReading == null
     }
 
 
 
-    HorizontalScrollableComponent(addedBooks){
+    HorizontalScrollableComponent(addedBooks, viewModel = viewModel){
         navController.navigate(ReaderScreens.UpdateScreen.name +"/$it")
 
     }
@@ -140,7 +143,7 @@ fun BookListArea(listOfBooks: List<MBook>,
 
 @Composable
 fun HorizontalScrollableComponent(listOfBooks: List<MBook>,
-                                  viewModel: HomeScreenViewModel = hiltViewModel(),
+                                  viewModel: HomeScreenViewModel,
                                   onCardPressed: (String) -> Unit) {
     val scrollState = rememberScrollState()
 
@@ -184,13 +187,14 @@ fun HorizontalScrollableComponent(listOfBooks: List<MBook>,
 
 @Composable
 fun ReadingRightNowArea(listOfBooks: List<MBook>,
-                        navController: NavController) {
+                        navController: NavController,
+                        viewModel: HomeScreenViewModel) {
     //Filter books by reading now
     val readingNowList = listOfBooks.filter { mBook ->
         mBook.startedReading != null && mBook.finishedReading == null
     }
 
-    HorizontalScrollableComponent(readingNowList){
+    HorizontalScrollableComponent(readingNowList, viewModel = viewModel){
         Log.d("TAG", "BoolListArea: $it")
         navController.navigate(ReaderScreens.UpdateScreen.name + "/$it")
     }

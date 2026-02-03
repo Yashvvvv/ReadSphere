@@ -49,28 +49,31 @@ class LoginScreenViewModel: ViewModel() {
         home: () -> Unit) {
         if (_loading.value == false) {
              _loading.value = true
+            Log.d("FB", "createUserWithEmailAndPassword: Attempting signup with email: $email")
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                      if (task.isSuccessful) {
-                         //me
+                         Log.d("FB", "createUserWithEmailAndPassword: SUCCESS! User: ${task.result?.user?.uid}")
                          val displayName = task.result?.user?.email?.split('@')?.get(0)
                          createUser(displayName)
                          home()
                      }else {
-                         Log.d("FB", "createUserWithEmailAndPassword: ${task.result.toString()}")
-
+                         Log.e("FB", "createUserWithEmailAndPassword FAILED: ${task.exception?.message}")
+                         Log.e("FB", "createUserWithEmailAndPassword exception: ${task.exception}")
                      }
                     _loading.value = false
-
-
+                }
+                .addOnFailureListener { exception ->
+                    Log.e("FB", "createUserWithEmailAndPassword FAILURE: ${exception.message}")
+                    _loading.value = false
                 }
         }
-
 
     }
 
     private fun createUser(displayName: String?) {
         val userId = auth.currentUser?.uid
+        Log.d("FB", "createUser: Creating user document for userId: $userId, displayName: $displayName")
 
         val user = MUser(userId = userId.toString(),
             displayName = displayName.toString(),
@@ -82,13 +85,12 @@ class LoginScreenViewModel: ViewModel() {
 
         FirebaseFirestore.getInstance().collection("users")
             .add(user)
-
-
-
-
-
-
-
+            .addOnSuccessListener { documentRef ->
+                Log.d("FB", "createUser: SUCCESS! Document ID: ${documentRef.id}")
+            }
+            .addOnFailureListener { exception ->
+                Log.e("FB", "createUser FAILED: ${exception.message}")
+            }
     }
 
 

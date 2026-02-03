@@ -26,7 +26,7 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             data.value.loading = true
             data.value = repository.getAllBooksFromDatabase()
-            if (!data.value.data.isNullOrEmpty()) data.value.loading = false
+            data.value.loading = false
         }
         Log.d("GET", "getAllBooksFromDatabase: ${data.value.data?.toList().toString()}")
 

@@ -18,12 +18,10 @@ class FireRepository @Inject constructor(
             dataOrException.data =  queryBook.get().await().documents.map { documentSnapshot ->
                 documentSnapshot.toObject(MBook::class.java)!!
             }
-            if (!dataOrException.data.isNullOrEmpty()) dataOrException.loading = false
-
-
         }catch (exception: FirebaseFirestoreException){
             dataOrException.e = exception
         }
+        dataOrException.loading = false
         return dataOrException
 
     }

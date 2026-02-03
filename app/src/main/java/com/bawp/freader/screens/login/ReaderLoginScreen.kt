@@ -116,13 +116,12 @@ fun UserForm(
     val passwordFocusRequest = FocusRequester.Default
     val keyboardController = LocalSoftwareKeyboardController.current
     val valid = remember(email.value, password.value) {
-         email.value.trim().isNotEmpty() && password.value.trim().isNotEmpty()
-
+         email.value.trim().isNotEmpty() && password.value.trim().length >= 6
     }
-    // Replace line 124 background reference
+
     val modifier = Modifier
         .height(250.dp)
-        .background(MaterialTheme.colorScheme.background)  // Changed from colors.background
+        .background(MaterialTheme.colorScheme.background)
         .verticalScroll(rememberScrollState())
 
     
